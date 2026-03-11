@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Fundamentals Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+  <div class="screen active" id="startScreen">
+    <h1>Quiz...<br><span>Time</span></h1>
+    <p class="subtitle">
+      Fun with Q&A and Have fun time &amp; more.
+    </p>
+    <div class="stats-row">
+      <div class="stat-chip"><span class="val">12</span><span class="lbl">Questions</span></div>
+      <div class="stat-chip"><span class="val">15 sec</span><span class="lbl">Per Q</span></div>
+      <div class="stat-chip"><span class="val">3</span><span class="lbl">Topics</span></div>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="startQuiz()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.596 8.697L5.75 12.5A.5.5 0 015 12.066V3.934a.5.5 0 01.75-.433l5.846 3.803a.5.5 0 010 .866z"/></svg>
+      Start Quiz
+    </button>
+  </div>
+
+  <div class="screen" id="quizScreen">
+    <div class="quiz-meta">
+      <div>
+        <div class="q-counter">Question <strong id="qNum">1</strong> <span style="color:var(--muted)">/12</span></div>
+      </div>
+      <div class="timer-wrap">
+        <span class="score-pill" id="livScore">Score: 0</span>
+        <div class="timer-ring">
+          <svg width="52" height="52" viewBox="0 0 52 52">
+            <circle class="track" cx="26" cy="26" r="21"/>
+            <circle class="fill" id="timerArc" cx="26" cy="26" r="21"/>
+          </svg>
+          <div class="timer-num" id="timerNum">15</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-category" id="qCategory">Fundamentals</div>
+      <div class="q-text" id="qText"></div>
+      <div id="qCode" class="q-code" style="display:none"></div>
+    </div>
+
+    <div class="options" id="optionsList"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="next-wrap" id="nextWrap">
+      <button class="btn btn-primary" onclick="nextQuestion()">
+        Next <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L10.293 8 4.646 2.354a.5.5 0 010-.708z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="screen" id="resultsScreen">
+    <div class="header">
+      <span class="logo">// Results</span>
+      <span class="badge" id="gradeTag">—</span>
+    </div>
+    <div class="results-hero">
+      <div class="score-ring">
+        <svg width="160" height="160" viewBox="0 0 160 160">
+          <defs>
+            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#7c3aed"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+          <circle class="r-track" cx="80" cy="80" r="70"/>
+          <circle class="r-fill" id="resultRing" cx="80" cy="80" r="70"/>
+        </svg>
+        <div class="score-center">
+          <span class="score-pct" id="scorePct">0%</span>
+          <span class="score-lbl">Score</span>
+        </div>
+      </div>
+      <div class="result-title" id="resultTitle">Nice work!</div>
+      <div class="result-subtitle" id="resultSub">Here's how you did.</div>
+    </div>
+
+    <div class="breakdown">
+      <div class="bd-card"><span class="bd-val g" id="bdCorrect">0</span><span class="bd-lbl">Correct</span></div>
+      <div class="bd-card"><span class="bd-val r" id="bdWrong">0</span><span class="bd-lbl">Wrong</span></div>
+      <div class="bd-card"><span class="bd-val b" id="bdTime">0s</span><span class="bd-lbl">Avg Time</span></div>
+    </div>
+
+    <div class="review-title">Review</div>
+    <div id="reviewList"></div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="showStart()">← Back</button>
+      <button class="btn btn-primary" onclick="startQuiz()">Retry Quiz</button>
+    </div>
+  </div>
+
+</div>
+<footer>
+  <span class="footer-line"></span>
+  <span class="footer-text">Made by <strong>NVNR</strong></span>
+  <span class="footer-line"></span>
+</footer>
+<script src="script.js"></script>
+</body>
