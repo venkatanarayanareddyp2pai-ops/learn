@@ -20,7 +20,10 @@
 <div class="app">
   <header>
     <div class="logo">Weather<span> Forecast</span></div>
-    <div style="display:flex;gap:12px;align-items:center;">
+    <div class="unit-toggle">
+      <button class="unit-btn active" id="btnC" onclick="setUnit('metric')">°C</button>
+      <button class="unit-btn" id="btnF" onclick="setUnit('imperial')">°F</button>
+    </div>
   </header>
 
   <div class="error-banner" id="errorBanner"></div>
@@ -28,7 +31,7 @@
   <div class="search-wrap" id="searchWrap">
     <input type="text" class="search-bar" id="searchInput"
       placeholder="Search city… (e.g. Delhi, Hyderabad, Mumbai)"
-      onkeydown="if(event.key==='Enter') searchCity()"/>
+      autocomplete="off" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)"/>
     <button class="search-btn" onclick="searchCity()" title="Search">
       <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
@@ -36,13 +39,13 @@
     </button>
   </div>
 
-  <div id="dashboard">
+  <div id="dashboard" style="position:relative;z-index:1;">
 
     <div class="grid-main">
 
       <div class="card hero-card">
-        <div class="city-name" id="cityName">—</div>
-        <div class="date-str" id="dateStr">—</div>
+        <div class="city-name" id="cityName">Search a city above</div>
+        <div class="date-str" id="dateStr">Enter a city name to get started</div>
         <div style="display:flex;align-items:flex-start;gap:32px;flex-wrap:wrap;">
           <div>
             <div class="weather-icon-big" id="mainIcon">🌤️</div>
@@ -164,10 +167,10 @@
       <div class="forecast-row" id="forecastRow">
       </div>
     </div>
-    <script src="script.js"></script>
-
   </div>
 </div>
+<div id="searchDropdown"></div>
+<script src="script.js"></script>
 
 </body>
 </html>
