@@ -1,34 +1,18 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   Weather Dashboard — Open-Meteo (free, no API key)
-═══════════════════════════════════════════════════════════════════════════ */
 
 let unit        = 'metric';
 let demoMode    = true;
 let currentData = null;
 
-/* ── dropdown ───────────────────────────────────────────────────────────── */
 let ddResults = [];
 let ddIndex   = -1;
 let ddTimer   = null;
 
-/* ── init ───────────────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
   hide('loadingOverlay');
   show('dashboard');
   showEmptyState();
 });
 
-/* ── unit toggle ────────────────────────────────────────────────────────── */
-function setUnit(u) {
-  unit = u;
-  document.getElementById('btnC').classList.toggle('active', u === 'metric');
-  document.getElementById('btnF').classList.toggle('active', u === 'imperial');
-  if (!demoMode && currentData) fetchWeatherByLoc(currentData.loc);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   DROPDOWN
-═══════════════════════════════════════════════════════════════════════════ */
 function onSearchInput() {
   const q = document.getElementById('searchInput').value.trim();
   clearTimeout(ddTimer);
@@ -95,7 +79,7 @@ function ddOpen(html) {
   dd.style.width = rect.width + 'px';
 
   dd.innerHTML   = html;
-  dd.style.display = 'block';         /* must set display BEFORE measuring */
+  dd.style.display = 'block';        
   dd.style.opacity = '1';
 }
 
@@ -122,13 +106,11 @@ function toFlag(code) {
   );
 }
 
-/* close when clicking outside */
 document.addEventListener('mousedown', e => {
   const wrap = document.getElementById('searchWrap');
   if (wrap && !wrap.contains(e.target)) ddClose();
 });
 
-/* reposition on scroll / resize */
 window.addEventListener('scroll', repositionDropdown, { passive: true });
 window.addEventListener('resize', repositionDropdown, { passive: true });
 
@@ -142,9 +124,6 @@ function repositionDropdown() {
   dd.style.width = rect.width + 'px';
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SEARCH
-═══════════════════════════════════════════════════════════════════════════ */
 function searchCity() {
   const q = document.getElementById('searchInput').value.trim();
   if (!q) return;
@@ -166,9 +145,6 @@ async function geocodeAndFetch(city) {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   FETCH WEATHER
-═══════════════════════════════════════════════════════════════════════════ */
 async function fetchWeatherByLoc(loc) {
   showLoader(); clearError();
   try {
@@ -219,9 +195,6 @@ async function fetchWeatherByLoc(loc) {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   RENDER
-═══════════════════════════════════════════════════════════════════════════ */
 function renderAll({ wx, loc, nowIdx }) {
   const c  = wx.current;
   const h  = wx.hourly;
@@ -328,9 +301,6 @@ function renderAll({ wx, loc, nowIdx }) {
   document.getElementById('forecastRow').innerHTML = fhtml;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   EMPTY STATE
-═══════════════════════════════════════════════════════════════════════════ */
 function showEmptyState() {
   demoMode = true;
   ['cityName','dateStr','mainTemp','mainCondition','feelsLike','humidity','pressure',
@@ -350,9 +320,6 @@ function showEmptyState() {
   document.getElementById('forecastRow').innerHTML  = '';
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   WMO HELPERS
-═══════════════════════════════════════════════════════════════════════════ */
 function wmoDesc(code, isDay) {
   const m = {
     0: isDay ? 'Clear Sky' : 'Clear Night',
@@ -381,9 +348,6 @@ function wmoIcon(code, isDay) {
   return '⛈️';
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   UTILS
-═══════════════════════════════════════════════════════════════════════════ */
 function set(id, val)  { const e=document.getElementById(id); if(e) e.textContent=val; }
 function show(id)      { const e=document.getElementById(id); if(e) e.style.display=''; }
 function hide(id)      { const e=document.getElementById(id); if(e) e.style.display='none'; }
