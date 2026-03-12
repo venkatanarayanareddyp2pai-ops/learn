@@ -72,7 +72,6 @@ function ddOpen(html) {
   const input = document.getElementById('searchInput');
   if (!dd || !input) return;
 
-  /* position relative to input */
   const rect    = input.getBoundingClientRect();
   dd.style.top  = (rect.bottom + 6) + 'px';
   dd.style.left = rect.left + 'px';
