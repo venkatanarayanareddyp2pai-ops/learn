@@ -1,10 +1,9 @@
 function TaskList() {
 
   const tasks = [
-    "Learn JSX",
-    "Understand Props",
-    "Practice useState",
-    "Build Components"
+    "Learning jsX",
+    "Narayana ",
+    "Building Components"
   ];
 
   return (
