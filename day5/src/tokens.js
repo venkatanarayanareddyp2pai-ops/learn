@@ -37,7 +37,7 @@ export const FIELD_STYLE = {
   outline: 'none', fontFamily: "'DM Sans', sans-serif",
   transition: 'border-color .2s',
 }
-
+//this is main file to reuse the colors
 export const LABEL_STYLE = {
   display: 'block', fontFamily: "'JetBrains Mono', monospace",
   fontSize: '10.5px', textTransform: 'uppercase',
