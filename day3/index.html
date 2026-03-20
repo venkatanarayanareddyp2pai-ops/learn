@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div class="stars"></div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Fetching weather…</div>
+</div>
+
+<div class="app">
+  <header>
+    <div class="logo">Weather<span> Forecast</span></div>
+  </header>
+
+  <div class="error-banner" id="errorBanner"></div>
+
+  <div class="search-wrap" id="searchWrap">
+    <input type="text" class="search-bar" id="searchInput"
+      placeholder="Search city… (e.g. Delhi, Hyderabad, Mumbai)"
+      autocomplete="off" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)"/>
+    <button class="search-btn" onclick="searchCity()" title="Search">
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="dashboard" style="position:relative;z-index:1;">
+
+    <div class="grid-main">
+
+      <div class="card hero-card">
+        <div class="city-name" id="cityName">Search a city above</div>
+        <div class="date-str" id="dateStr">Enter a city name to get started</div>
+        <div style="display:flex;align-items:flex-start;gap:32px;flex-wrap:wrap;">
+          <div>
+            <div class="weather-icon-big" id="mainIcon">🌤️</div>
+            <div class="temp-row">
+              <div class="temp-big" id="mainTemp">—</div>
+              <div class="temp-unit" id="tempUnit">°C</div>
+            </div>
+            <div class="condition" id="mainCondition">—</div>
+            <div class="feels" id="feelsLike">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Atmosphere</div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-label">Humidity</div>
+            <div class="stat-val blue" id="humidity">—</div>
+            <div class="meter-track"><div class="meter-fill" id="humMeter" style="background:var(--accent);width:0%"></div></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Pressure</div>
+            <div class="stat-val cool" id="pressure">—</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Visibility</div>
+            <div class="stat-val green" id="visibility">—</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Dew Point</div>
+            <div class="stat-val warm" id="dewPoint">—</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="grid-bottom" style="margin-bottom:16px;">
+
+      <div class="card">
+        <div class="card-label">Wind</div>
+        <div class="wind-compass">
+          <div class="compass-labels">
+            <span class="n">N</span><span class="s">S</span>
+            <span class="e">E</span><span class="w">W</span>
+          </div>
+          <div class="compass-needle" id="needle"></div>
+        </div>
+        <div class="wind-speed-big" id="windSpeed">— <span style="font-size:14px;color:var(--muted)" id="windUnit">km/h</span></div>
+        <div class="wind-dir-label" id="windDir">—</div>
+        <div style="margin-top:16px;display:flex;gap:16px;">
+          <div class="stat-item">
+            <div class="stat-label">Gusts</div>
+            <div class="stat-val cool" id="windGust">—</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Beaufort</div>
+            <div class="stat-val blue" id="beaufort">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">UV & Air Quality</div>
+        <div class="stat-item" style="margin-bottom:18px;">
+          <div class="stat-label">UV Index</div>
+          <div class="stat-val warm" id="uvIndex">—</div>
+          <div class="meter-track">
+            <div class="meter-fill" id="uvMeter" style="background:linear-gradient(90deg,#5ee87a,#f8e24f,#f8a84f,#f84f4f);width:0%"></div>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px;" id="uvLabel">—</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Cloud Cover</div>
+          <div class="stat-val blue" id="cloudCover">—</div>
+          <div class="meter-track">
+            <div class="meter-fill" id="cloudMeter" style="background:var(--cool);width:0%"></div>
+          </div>
+        </div>
+        <div style="margin-top:18px;" class="stat-item">
+          <div class="stat-label">Precipitation</div>
+          <div class="stat-val green" id="precip">—</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Sunrise & Sunset</div>
+        <div class="sun-bar">
+          <div class="sun-arc"></div>
+          <div class="sun-dot" id="sunDot"></div>
+        </div>
+        <div class="sun-labels">
+          <div><span>Sunrise</span><strong id="sunrise">—</strong></div>
+          <div style="text-align:right"><span>Sunset</span><strong id="sunset">—</strong></div>
+        </div>
+        <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="stat-item">
+            <div class="stat-label">Daylight</div>
+            <div class="stat-val warm" id="daylight">—</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Timezone</div>
+            <div class="stat-val" style="font-size:14px;" id="timezone">—</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-label">Hourly Forecast</div>
+      <div class="hourly-scroll" id="hourlyScroll">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">5-Day Forecast</div>
+      <div class="forecast-row" id="forecastRow">
+      </div>
+    </div>
+  </div>
+</div>
+<div id="searchDropdown"></div>
+<script src="script.js"></script>
+
+</body>
+</html>
